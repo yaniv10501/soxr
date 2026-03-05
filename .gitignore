@@ -1,2 +1,6 @@
 Release*/
 Debug*/
+build_win_x64*/
+build_arm64*/
+build_x86_64*/
+universal*/

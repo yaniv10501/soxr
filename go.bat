@@ -28,5 +28,5 @@ cmake --build . --config %BUILD_TYPE%
 
 echo.
 echo Build complete.
-echo DLL located in: build_win_x64\src\%BUILD_TYPE%\libsoxr.dll
+echo DLL located in: build_win_x64\bin\%BUILD_TYPE%\soxr.dll
 cd ..
