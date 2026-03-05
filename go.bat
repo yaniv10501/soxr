@@ -1,27 +1,32 @@
 @echo off
-rem SoX Resampler Library      Copyright (c) 2007-16 robs@users.sourceforge.net
-rem Licence for this file: LGPL v2.1                  See LICENCE for details.
+setlocal enabledelayedexpansion
 
-set build=%1
-if x%build% == x set build=Release
+:: Set build type (Default to Release)
+set BUILD_TYPE=Release
+if not "%~1"=="" set BUILD_TYPE=%~1
 
-rem Prevent interference from any in-tree build
+:: Clean previous build
 del/f CMakeCache.txt
+if exist build_win_x64 rmdir /s /q build_win_x64
+mkdir build_win_x64
+cd build_win_x64
 
-mkdir %build%
-cd %build%
+echo Building for Windows x64 (%BUILD_TYPE%)...
 
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=%build% -Wno-dev ..
-if errorlevel 1 goto end
+:: Configure with OpenMP enabled (MSVC uses /openmp)
+cmake -A x64 ^
+      -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
+      -DBUILD_SHARED_LIBS=ON ^
+      -DOpenMP_C_FLAGS="/openmp" ^
+      -DOpenMP_CXX_FLAGS="/openmp" ^
+      -DCMAKE_C_FLAGS="/W3 /O2" ^
+      -DCMAKE_CXX_FLAGS="/W3 /O2" ^
+      ..
 
-nmake
-if errorlevel 1 goto end
+:: Build the project
+cmake --build . --config %BUILD_TYPE%
 
-nmake test
-if errorlevel 1 goto error
-goto end
-
-:error
-echo FAILURE details in Testing\Temporary\LastTest.log
-
-:end
+echo.
+echo Build complete.
+echo DLL located in: build_win_x64\src\%BUILD_TYPE%\libsoxr.dll
+cd ..
