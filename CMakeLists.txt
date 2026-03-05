@@ -1,9 +1,9 @@
 # SoX Resampler Library       Copyright (c) 2007-18 robs@users.sourceforge.net
 # Licence for this file: LGPL v2.1                  See LICENCE for details.
 
-cmake_minimum_required (VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
 
-project (soxr C)
+project (soxr C CXX)
 set (DESCRIPTION_SUMMARY
     "High quality, one-dimensional sample-rate conversion library")
 

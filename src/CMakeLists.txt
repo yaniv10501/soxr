@@ -76,7 +76,7 @@ endif ()
 
 # Libsoxr:
 
-add_library (${PROJECT_NAME} ${LIB_TYPE} ${SOURCES})
+add_library (${PROJECT_NAME} ${LIB_TYPE} ${SOURCES} "soxr-bridge.cpp")
 target_link_libraries (${PROJECT_NAME} PRIVATE ${LIBS} ${LIBM_LIBRARIES})
 set_target_properties (${PROJECT_NAME} PROPERTIES
   VERSION "${SO_VERSION}"
